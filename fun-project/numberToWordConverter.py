@@ -1,29 +1,28 @@
 #!/usr/bin/env python3
 
 
-def get_ones_value(num,dic,firstPos,secondPos):
+def get_ones_value(num,ones_dic):
     print("{}".format("Ones"))
-    if num in dic:
-        if len(dic[num]) == 1:
-            # print("{} is spelt as {}".format(num,dic[num][0].capitalize()))
-            return dic[num][0].capitalize()
-        else:                
-            # print("{} is spelt as {}".format(num, firstPos[num][firstPos].capitalize()))
-            return dic[num][firstPos].capitalize()
-    else:
-        # print("{} is spelt as {}".format(num, firstPos[secondPos][firstPos].capitalize()))
-        return dic[secondPos][firstPos].capitalize()  
+    return ones_dic[num].capitalize()              
 
-def get_tens_value(num,dic_one,dic_two,firstPos,secondPos):
+def get_tens_value(num,dic_one,dic_two,posOne,posTwo):
     print("{}".format("Tens"))
-    if num in dic_one:
+    # use cases numbers: 11, 21
+    # get the first index value for key values in the dictionary. eg: for num = 20; key: 20, value: twenty; ....
+    if num in dic_two:
         # print("{} is spelt as {}".format(num,dic_one[num].capitalize()
-        return dic_one[num][firstPos].capitalize()
+        return dic_two[num][0].capitalize()
     else:
-        number = firstPos * 10
-        num_in_words = dic_one[number]
-        num_in_words = f"{num_in_words} " + dic_two[secondPos][0]
-        # print("{} is spelt as {}".format(num,num_in_words.capitalize()))
+    # get second index value for key values not dictionary. Range: 11-19. 
+    # eg: for key: 11, Value: eleven
+        number = posOne * 10
+        if posOne <= 1 and posTwo >= 1:
+            number = posTwo * 10           
+            num_in_words = dic_two[number][1]
+        else:
+        # get second index value for key values not dictionary. Range: 21-99. 
+            num_in_words = dic_two[number][0]
+            num_in_words = f"{num_in_words} " + dic_one[posTwo]
         return num_in_words.capitalize()
 
 
@@ -56,38 +55,37 @@ def get_hundreds_value(num,onesDic,tensDic,hundredsDic,firstPos,secondPos):
 
 def number_to_word(num):
     ones_dic = {
-        1:["one","eleven"],
-        2:["two","twelve"],
-        3:["three","thirteen"],
-        4:["four","fourteen"],
-        5:["five","fifteen"],
-        6:["six","sixteen"],
-        7:["seven","seventeen"],
-        8:["eight","eighteen"],
-        9:["nine","nineteen"],
-        10:["ten"]
+        1:"one",
+        2:"two",
+        3:"three",
+        4:"four",
+        5:"five",
+        6:"six",
+        7:"seven",
+        8:"eight",
+        9:"nine"
     }
     tens_dic = {
-        # 10:"ten",      
-        20:"twenty",
-        30:"thirty",
-        40:"fourty",
-        50:"fifty",
-        60:"sixty",
-        70:"seventy",
-        80:"eighty",
-        90:"ninety"        
+        10:["ten","eleven"],      
+        20:["twenty","twelve"],
+        30:["thirty","thirteen"],
+        40:["fourty","fourteen"],
+        50:["fifty","fifteen"],
+        60:["sixty","sixteen"],
+        70:["seventy","seventeen"],
+        80:["eighty","eighteen"],
+        90:["ninety","nineteen"],       
     }
     hundreds_dic = {
         100:"hundred"
     }
     ones_position = get_ones(num)
     tens_position = get_tens(num)
-    if ones_position == 0 or ones_position == 1:
-        ones_value = get_ones_value(num,ones_dic, ones_position,tens_position)
+    if ones_position == 0 and tens_position == num:
+        ones_value = get_ones_value(num,ones_dic)
         print(f"{num} is spelt as {ones_value}")
-    elif ones_position > 1 and ones_position <10:
-            tens_value = get_tens_value(num,tens_dic,ones_dic, ones_position,tens_position)
+    elif ones_position > 0 and tens_position < num:
+            tens_value = get_tens_value(num,ones_dic,tens_dic, ones_position,tens_position)
             print(f"{num} is spelt as {tens_value}")
     elif ones_position > 9 and ones_position <100:
         hundreds_value = get_hundreds_value(num,ones_dic,tens_dic,hundreds_dic,ones_position,tens_position)
@@ -110,7 +108,7 @@ def get_tens(num):
 #     return int(rem)
 
 numb = int(input("Plse Enter a number: "))
-while numb is not 0:
+while numb != 0:
     number_to_word(numb)
     numb = int(input("Plse Enter a number: "))
 print("Thank You!")
