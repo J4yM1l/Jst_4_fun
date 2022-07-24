@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
-
+'''
+This program takes any number input between 0 to 999 and returns it in words.
+'''
 def get_ones_value(num,ones_dic):
     print("{}".format("Ones"))
     return ones_dic[num].capitalize()              
