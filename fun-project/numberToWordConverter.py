@@ -7,7 +7,7 @@ def get_ones_value(num,ones_dic):
 
 def get_tens_value(num,dic_one,dic_two,posOne,posTwo):
     print("{}".format("Tens"))
-    # get the first index value for key values in the dictionary. eg: for num = 20; key: 20, value: twenty; ....
+    # get the first index value for key values in the dictionary. eg: for input = 20; key: 20, value: twenty; ....
     if num in dic_two:
         return dic_two[num][0].capitalize()
     else:
